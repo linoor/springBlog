@@ -14,7 +14,7 @@ import java.util.Collection;
  */
 
 @RestController
-@RequestMapping("/{userId}/articles")
+@RequestMapping("users/{userId}/articles")
 public class ArticleRestController {
 
     private final ArticleRepository articleRepository;
@@ -57,7 +57,7 @@ public class ArticleRestController {
 
     private void validateUser(String userId) {
         this.authorRepository.findByUsername(userId).orElseThrow(
-                () -> new UserNotFoundException(userId);
-        )
+                () -> new UserNotFoundException(userId)
+        );
     }
 }
