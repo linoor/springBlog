@@ -1,9 +1,11 @@
 <div>
     <ul>
-        <li data-ng-repeat="article in articles">
-            <div>
-                <h1>{{ article.title }}</h1>
-                <textarea name="blogBody" id="blog{{ article.id }}" cols="30" rows="10">{{ article.body }}</textarea>
+        <li data-ng-repeat="entry in entries_filtered">
+            <div data-ng-cloak>
+                <div>
+                    <a href="#/{{ username}}/{{ entry.id }}">{{ entry.title }}</a>
+                </div>
+                <textarea name="blogBody" id="blog{{ entry.id }}" cols="30" rows="10">{{ entry.body }}</textarea>
             </div>
         </li>
     </ul>

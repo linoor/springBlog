@@ -9,6 +9,10 @@ app.config(['$routeProvider', function ($routeProvider) {
         templateUrl: 'partials/main.html',
         controller: blogController
     })
+    .when('/:username/:articleId', {
+        templateUrl: "/partials/main.html",
+        controller: blogController
+    })
     .otherwise({
         redirectTo: "/"
     });
@@ -17,13 +21,20 @@ app.config(['$routeProvider', function ($routeProvider) {
 var blogController = function($scope, $http, $routeParams) {
 
     $scope.getAllBlogs = function () {
-        console.log("")
-        $http.get('/users/' + $routeParams.username + '/articles').success(function(response) {
-            $scope.articles = response;
+        $scope.username = $routeParams.username;
+        $http.get('/users/' + $scope.username + '/articles').success(function(response) {
+            $scope.entries = response;
+
+            // filter the blog entries
+            $scope.articleId = $routeParams.articleId;
+            console.log($scope.articleId);
+            $scope.entries_filtered = $scope.entries.filter(function(entry) {
+                return entry['id'] == $scope.articleId || typeof $scope.articleId === 'undefined'
+            });
         }).error(function() {
-            var errorMessage = "Could not display all articles.";
+            var errorMessage = "Could not display all entries.";
             $scope.error = errorMessage;
         });
-    }
+    };
     $scope.getAllBlogs();
-}
+};
