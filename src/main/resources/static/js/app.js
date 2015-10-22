@@ -14,7 +14,7 @@ app.config(['$routeProvider', function ($routeProvider) {
         controller: blogController
     })
     .when('/:username/entries/:entryId', {
-        templateUrl: "/partials/entries.html",
+        templateUrl: "partials/single_entry.html",
         controller: blogController
     })
     .otherwise({
@@ -25,20 +25,23 @@ app.config(['$routeProvider', function ($routeProvider) {
 var blogController = function($scope, $http, $routeParams, $location) {
     $scope.username = $routeParams.username;
 
-    $scope.getAllEntries = function () {
+    var getAllEntries = function () {
         $http.get('/users/' + $scope.username + '/entries').success(function(response) {
             $scope.entries = response;
 
-            // filter the blog entries
-            $scope.entryId = $routeParams.entryId;
-            $scope.entries_filtered = $scope.entries.filter(function(entry) {
-                return entry['id'] == $scope.entryId || typeof $scope.entryId === 'undefined'
-            });
+            var entryId = $routeParams.entryId;
+            if (entryId) {
+                console.log($scope.entries);
+                $scope.entry = $scope.entries.filter(function (entry) {
+                    return entry.id == entryId;
+                })[0];
+            }
         }).error(function() {
             var errorMessage = "Could not display all entries.";
             $scope.error = errorMessage;
         });
     };
+    getAllEntries();
 
     $scope.addEntry = function() {
         $http.post('/users/' + $scope.username + '/entries', {
@@ -51,7 +54,6 @@ var blogController = function($scope, $http, $routeParams, $location) {
            var location = headers()['location'];
            $location.path(location.substr(location.indexOf($scope.username)));
         })
-    }
+    };
 
-    $scope.getAllEntries();
 };

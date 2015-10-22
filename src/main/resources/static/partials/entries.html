@@ -1,12 +1,9 @@
 <div>
+    <div>
+        <button><a href="#/{{ username }}/entries/new">New entry</a></button>
+    </div>
     <ul>
-        <li data-ng-repeat="entry in entries_filtered">
-            <div>
-                <div>
-                    <a href="#/{{ username}}/entries/{{ entry.id }}">{{ entry.title }}</a>
-                </div>
-                <textarea name="blogBody" id="blog{{ entry.id }}" cols="30" rows="10">{{ entry.body }}</textarea>
-            </div>
+        <li data-ng-repeat="entry in entries" data-ng-include="'partials/entry.html'">
         </li>
     </ul>
 </div>
