@@ -3,7 +3,7 @@
         <li data-ng-repeat="entry in entries_filtered">
             <div data-ng-cloak>
                 <div>
-                    <a href="#/{{ username}}/{{ entry.id }}">{{ entry.title }}</a>
+                    <a href="#/{{ username}}/entries/{{ entry.id }}">{{ entry.title }}</a>
                 </div>
                 <textarea name="blogBody" id="blog{{ entry.id }}" cols="30" rows="10">{{ entry.body }}</textarea>
             </div>

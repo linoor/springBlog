@@ -5,12 +5,12 @@
 var app = angular.module('blog', ['ngRoute']);
 
 app.config(['$routeProvider', function ($routeProvider) {
-    $routeProvider.when('/:username', {
-        templateUrl: 'partials/main.html',
+    $routeProvider.when('/:username/entries', {
+        templateUrl: 'partials/entries.html',
         controller: blogController
     })
-    .when('/:username/:articleId', {
-        templateUrl: "/partials/main.html",
+    .when('/:username/entries/:entryId', {
+        templateUrl: "/partials/entries.html",
         controller: blogController
     })
     .otherwise({
@@ -26,10 +26,10 @@ var blogController = function($scope, $http, $routeParams) {
             $scope.entries = response;
 
             // filter the blog entries
-            $scope.articleId = $routeParams.articleId;
-            console.log($scope.articleId);
+            $scope.entryId = $routeParams.entryId;
+            console.log($scope.entryId);
             $scope.entries_filtered = $scope.entries.filter(function(entry) {
-                return entry['id'] == $scope.articleId || typeof $scope.articleId === 'undefined'
+                return entry['id'] == $scope.entryId || typeof $scope.entryId === 'undefined'
             });
         }).error(function() {
             var errorMessage = "Could not display all entries.";
