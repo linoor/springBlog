@@ -7,6 +7,6 @@ import java.util.Collection;
 /**
  * Created by linoor on 10/20/15.
  */
-public interface ArticleRepository extends JpaRepository<Article, Long> {
-    Collection<Article> findByAuthorUsername(String username);
+public interface EntryRepository extends JpaRepository<Entry, Long> {
+    Collection<Entry> findByAuthorUsername(String username);
 }

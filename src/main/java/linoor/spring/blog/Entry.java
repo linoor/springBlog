@@ -14,7 +14,7 @@ import javax.persistence.ManyToOne;
  */
 
 @Entity
-public class Article {
+public class Entry {
     @JsonIgnore
     @ManyToOne
     private Author author;
@@ -23,11 +23,11 @@ public class Article {
     @GeneratedValue
     private long id;
 
-    public Article() {
+    public Entry() {
 
     }
 
-    public Article(Author author, String title, String body) {
+    public Entry(Author author, String title, String body) {
         this.author = author;
         this.title = title;
         this.body = body;

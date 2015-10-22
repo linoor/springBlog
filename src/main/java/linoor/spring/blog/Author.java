@@ -17,7 +17,7 @@ import java.util.Set;
 public class Author {
 
     @OneToMany(mappedBy = "author")
-    private Set<Article> articles = new HashSet<>();
+    private Set<Entry> entries = new HashSet<>();
 
     @Id
     @GeneratedValue

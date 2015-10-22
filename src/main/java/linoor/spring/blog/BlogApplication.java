@@ -12,13 +12,13 @@ public class BlogApplication {
 
     @Bean
     CommandLineRunner init(AuthorRepository authorRepository,
-                           ArticleRepository articleRepository) {
+                           EntryRepository entryRepository) {
         return (evt) -> Arrays.asList(
                 "jhoeller,dsyer,pwebb,ogierke,rwinch,mfisher,mpollack,jlong".split(",")).forEach(
                         a -> {
                             Author author = authorRepository.save(new Author(a, "password"));
-                            articleRepository.save(new Article(author, "some title", "some body lorem ipsum."));
-                            articleRepository.save(new Article(author, "some title2", "some body lorem ipsum.2"));
+                            entryRepository.save(new Entry(author, "some title", "some body lorem ipsum."));
+                            entryRepository.save(new Entry(author, "some title2", "some body lorem ipsum.2"));
                         }
         );
     }
