@@ -9,6 +9,10 @@ app.config(['$routeProvider', function ($routeProvider) {
         templateUrl: 'partials/entries.html',
         controller: blogController
     })
+    .when('/:username/entries/new', {
+        templateUrl: "partials/new_entry.html",
+        controller: blogController
+    })
     .when('/:username/entries/:entryId', {
         templateUrl: "/partials/entries.html",
         controller: blogController
@@ -18,16 +22,15 @@ app.config(['$routeProvider', function ($routeProvider) {
     });
 }]);
 
-var blogController = function($scope, $http, $routeParams) {
+var blogController = function($scope, $http, $routeParams, $location) {
+    $scope.username = $routeParams.username;
 
-    $scope.getAllBlogs = function () {
-        $scope.username = $routeParams.username;
-        $http.get('/users/' + $scope.username + '/articles').success(function(response) {
+    $scope.getAllEntries = function () {
+        $http.get('/users/' + $scope.username + '/entries').success(function(response) {
             $scope.entries = response;
 
             // filter the blog entries
             $scope.entryId = $routeParams.entryId;
-            console.log($scope.entryId);
             $scope.entries_filtered = $scope.entries.filter(function(entry) {
                 return entry['id'] == $scope.entryId || typeof $scope.entryId === 'undefined'
             });
@@ -36,5 +39,19 @@ var blogController = function($scope, $http, $routeParams) {
             $scope.error = errorMessage;
         });
     };
-    $scope.getAllBlogs();
+
+    $scope.addEntry = function() {
+        $http.post('/users/' + $scope.username + '/entries', {
+            'title': $scope.title,
+            'body': $scope.body
+        }).success(function (data, status, headers, config) {
+           // redirect to the new entry
+           $scope.title = '';
+           $scope.body = '';
+           var location = headers()['location'];
+           $location.path(location.substr(location.indexOf($scope.username)));
+        })
+    }
+
+    $scope.getAllEntries();
 };

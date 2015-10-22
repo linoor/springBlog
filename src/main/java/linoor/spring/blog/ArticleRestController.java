@@ -14,7 +14,7 @@ import java.util.Collection;
  */
 
 @RestController
-@RequestMapping("users/{userId}/articles")
+@RequestMapping("users/{userId}/entries")
 public class ArticleRestController {
 
     private final ArticleRepository articleRepository;
